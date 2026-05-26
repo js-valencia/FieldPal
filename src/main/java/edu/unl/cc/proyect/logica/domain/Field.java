@@ -1,4 +1,4 @@
-package edu.unl.cc;
+package edu.unl.cc.proyect.logica.domain;
 import java.time.LocalDateTime;
 
 public class Field {

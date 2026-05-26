@@ -1,5 +1,10 @@
 package edu.unl.cc.proyect.logica.view;
 
+import edu.unl.cc.proyect.logica.domain.Field;
+import edu.unl.cc.proyect.logica.domain.Payment;
+import edu.unl.cc.proyect.logica.domain.Report;
+import edu.unl.cc.proyect.logica.domain.Schedule;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -19,7 +24,7 @@ public class ReserveExecutor {
         boolean paid = scanner.nextBoolean();
 
 
-        Field field = new Field(1, "Cancha Sintética", 20.0f);
+        Field field = new Field(1, 1, "Abogado", "Cancha Sintética", 20.0, "abierto", "13:00 - 22:00");
 
         Schedule schedule = new Schedule(
                 LocalTime.of(18, 0),
