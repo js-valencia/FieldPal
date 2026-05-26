@@ -22,11 +22,11 @@ public class Report {
 
     //Métodos
     public Report generateDailyReport() {
-        BigDecimal totalIncome = BigDecimal.ZERO;
+        this.totalIncome = BigDecimal.ZERO;
 
         for (Payment payment : totalPayments) {
             if (payment.isPaid()) {
-                totalIncome = totalIncome.add(payment.amountToBePaid());
+                this.totalIncome = this.totalIncome.add(payment.amountToBePaid());
             }
         }
         return this;
@@ -50,15 +50,12 @@ public class Report {
     public List<Payment> getTotalPayments() {
         return totalPayments;
     }
-
     public LocalDate getDate() {
         return date;
     }
-
     public BigDecimal getTotalIncome() {
         return totalIncome;
     }
-
     public void setTotalIncome(BigDecimal totalIncome) {
         this.totalIncome = totalIncome;
     }

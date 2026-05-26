@@ -10,24 +10,28 @@ public class Reservation {
     private User user;
     private Field field;
     private LocalDateTime date;
+    private float totalAmount;
     private String reservationStatus;
     private boolean expiration;
-    private List<Schedule> schedules;
+    private List<Schedule> reservedSlots;
 
-    // Constructor completo
-    public Reservation(int reservationId, int organizationId, User user, Field field, LocalDateTime date, String reservationStatus, boolean expiration) {
+    public Reservation(int reservationId, int organizationId, User user, Field field, LocalDateTime date, float totalAmount, String reservationStatus, boolean expiration) {
         this.reservationId = reservationId;
         this.organizationId = organizationId;
         this.user = user;
         this.field = field;
         this.date = date;
+        this.totalAmount = totalAmount;
         this.reservationStatus = reservationStatus;
         this.expiration = expiration;
-        this.schedules = new ArrayList<>();
+        this.reservedSlots = new ArrayList<>();
     }
 
-    public boolean validateAvailability(List<Schedule> requestedSchedules) {
-        for (Schedule slot : requestedSchedules) {
+    public boolean validateAvailability(int idUser) {
+        if (this.reservedSlots == null || this.reservedSlots.isEmpty()) {
+            return true;
+        }
+        for (Schedule slot : this.reservedSlots) {
             if (slot.isReserved()) {
                 return false;
             }
@@ -35,26 +39,34 @@ public class Reservation {
         return true;
     }
 
+    public float calculateTotal(int hours) {
+        if (field != null) {
+            this.totalAmount = field.getPricePerHour() * hours;
+        }
+        return this.totalAmount;
+    }
+
     public boolean updateStatus(String newStatus) {
         this.reservationStatus = newStatus;
         return true;
     }
 
-    public boolean makeReservation(List<Schedule> schedulesToBook) {
-        if (validateAvailability(schedulesToBook)) {
-            this.schedules = schedulesToBook;
-            for (Schedule slot : this.schedules) {
+    public boolean makeReservation(List<Schedule> schedules) {
+        this.reservedSlots = schedules;
+        if (validateAvailability(this.user != null ? this.user.getUserID() : 0)) {
+            for (Schedule slot : this.reservedSlots) {
                 slot.setReserved(true);
             }
             this.reservationStatus = "CONFIRMED";
+            calculateTotal(schedules.size());
             return true;
         }
-        return false; // Horario ocupado
+        return false;
     }
 
     public boolean cancelReservation() {
-        if (this.schedules != null) {
-            for (Schedule slot : this.schedules) {
+        if (this.reservedSlots != null) {
+            for (Schedule slot : this.reservedSlots) {
                 slot.setReserved(false);
             }
         }
@@ -92,6 +104,12 @@ public class Reservation {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+    public float getTotalAmount() {
+        return totalAmount;
+    }
+    public void setTotalAmount(float totalAmount) {
+        this.totalAmount = totalAmount;
+    }
     public String getReservationStatus() {
         return reservationStatus;
     }
@@ -104,11 +122,10 @@ public class Reservation {
     public void setExpiration(boolean expiration) {
         this.expiration = expiration;
     }
-    public List<Schedule> getSchedules() {
-        return schedules;
+    public List<Schedule> getReservedSlots() {
+        return reservedSlots;
     }
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
+    public void setReservedSlots(List<Schedule> reservedSlots) {
+        this.reservedSlots = reservedSlots;
     }
 }
-
