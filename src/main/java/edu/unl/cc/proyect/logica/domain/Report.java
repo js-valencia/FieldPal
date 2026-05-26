@@ -5,15 +5,15 @@ import java.util.List;
 import java.math.BigDecimal;
 
 public class Report {
+    private LocalDate date;
     private List<Payment> totalPayments;
     private BigDecimal totalIncome;
-    private LocalDate date;
 
     //Constructores
-    public Report(List<Payment> totalPayments, BigDecimal totalIncome, LocalDate date) {
+    public Report(LocalDate date, List<Payment> totalPayments, BigDecimal totalIncome) {
+        this.date = date;
         this.totalPayments = totalPayments;
         this.totalIncome = totalIncome;
-        this.date = date;
     }
 
     public Report(LocalDate date) {
