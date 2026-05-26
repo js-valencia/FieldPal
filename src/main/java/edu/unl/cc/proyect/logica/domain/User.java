@@ -4,36 +4,33 @@ import java.util.Objects;
 
 public class User {
 
+    private String fullName;
     private String username;
     private String password;
     private String phoneNumber;
     private String email;
-    private String fullName;
     private RoleType role;
 
-    // Constructor completo
-    public User(String username, String password, String phoneNumber, String email, String fullName, RoleType role) {
-        this.username = Objects.requireNonNull(username, "El username no puede ser nulo");
-        this.password = Objects.requireNonNull(password, "El password no puede ser nulo");
+    public User(String fullName, String username, String password, String phoneNumber, String email, RoleType role) {
+        this.fullName = Objects.requireNonNull(fullName, "Full name cannot be null");
+        this.username = Objects.requireNonNull(username, "Username cannot be null");
+        this.password = Objects.requireNonNull(password, "Password cannot be null");
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.role = Objects.requireNonNull(role, "Role cannot be null");
+    }
+
+    public boolean hasPermission() {
+        return this.role == RoleType.ADMIN;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
         this.fullName = fullName;
-        this.role = Objects.requireNonNull(role, "El rol no puede ser nulo");
     }
-
-    public boolean hasPermission(String action) {
-        if (action == null || action.isBlank()) {
-            return false;
-        }
-
-        if (this.role == RoleType.ADMIN) {
-            return true;
-        }
-
-        return "PLAY_GAME".equalsIgnoreCase(action);
-    }
-
-    // --- GETTERS Y SETTERS (Encapsulamiento) ---
 
     public String getUsername() {
         return username;
@@ -65,14 +62,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public RoleType getRole() {
