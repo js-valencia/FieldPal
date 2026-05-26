@@ -1,78 +1,53 @@
 package edu.unl.cc.proyect.logica.domain;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
-public class Payment {
-    private int paymentId;
-    private int organizationId;
+public class Payment implements Serializable{
     private LocalDateTime paymentDate;
-    private int numberOfPlayers;
-    private boolean paid;
+    private boolean isPaid;
 
     private Field field;
     private Schedule schedule;
+    private Reservation reservation;
 
-    //Constructores
-
-    public Payment(int paymentId, int organizationId, LocalDateTime paymentDate, int numberOfPlayers, boolean paid, Field field, Schedule schedule) {
-        this.paymentId = paymentId;
-        this.organizationId = organizationId;
+    //Constructor
+    public Payment(LocalDateTime paymentDate, boolean isPaid, Field field, Schedule schedule, Reservation reservation) {
         this.paymentDate = paymentDate;
-        this.setNumberOfPlayers(numberOfPlayers);
-        this.paid = paid;
+        this.isPaid = isPaid;
         this.field = field;
         this.schedule = schedule;
-    }
-
-    public Payment(int paymentId, int organizationId, int numberOfPlayers, Field field, Schedule schedule) {
-        this.paymentId = paymentId;
-        this.organizationId = organizationId;
-        this.setNumberOfPlayers(numberOfPlayers);
-        this.field = field;
-        this.schedule = schedule;
+        this.reservation = reservation;
     }
 
     //Métodos
-    public BigDecimal amountToBePaid() {
+    public BigDecimal calculateAmountToBePaid() {
         long hours = Duration.between(schedule.getStartTime(), schedule.getEndTime()).toHours();
-        return BigDecimal.valueOf(field.getPricePerHour()).multiply(BigDecimal.valueOf(hours));
+        return field.getPricePerHour().multiply(BigDecimal.valueOf(hours));
     }
 
     public BigDecimal calculateSplitAmount(){
-        return amountToBePaid().divide(BigDecimal.valueOf(numberOfPlayers), 2, RoundingMode.HALF_UP);
-    }
-
-    public boolean isPaid(){
-        return paid;
-    }
-
-    @Override
-    public String toString() {
-        return "Pago ID: " + paymentId +
-                "\nOrganización ID: " + organizationId +
-                "\nMonto total: $" + amountToBePaid() +
-                "\nPago individual: " + calculateSplitAmount() +
-                "\nFecha: " + paymentDate +
-                "\nJugadores: " + numberOfPlayers +
-                "\nEstado del pago: " + paid;
+        return calculateAmountToBePaid().divide(BigDecimal.valueOf(reservation.getNumberOfPlayers()), 2, RoundingMode.HALF_UP);
     }
 
     public String generatePaymentSummary(){
         return toString();
     }
 
+    @Override
+    public String toString() {
+        return "Monto total: $" + calculateAmountToBePaid() +
+                "\nPago individual: " + calculateSplitAmount() +
+                "\nFecha: " + paymentDate +
+                "\nJugadores: " + reservation.getNumberOfPlayers() +
+                "\nEstado del pago: " + isPaid;
+    }
+
+
     //Getters and Setters
-    public int getPaymentId() {
-        return paymentId;
-    }
-
-    public int getOrganizationId() {
-        return organizationId;
-    }
-
     public LocalDateTime getPaymentDate() {
         return paymentDate;
     }
@@ -85,23 +60,15 @@ public class Payment {
         return schedule;
     }
 
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
+    public Reservation getReservation() {
+        return reservation;
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        if(numberOfPlayers >= 8 && numberOfPlayers <=20){
-            this.numberOfPlayers = numberOfPlayers;
-        } else {
-            throw new IllegalArgumentException("El número de jugadores debe ser de mínimo 8 y máximo 20");
-        }
+    public boolean getIsPaid() {
+        return isPaid;
     }
 
-    public boolean getPaid() {
-        return paid;
-    }
-
-    public void setPaid(boolean paid) {
-        this.paid = paid;
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
     }
 }

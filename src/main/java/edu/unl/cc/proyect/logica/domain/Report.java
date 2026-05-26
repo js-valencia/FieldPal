@@ -1,62 +1,44 @@
 package edu.unl.cc.proyect.logica.domain;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class Report {
+public class Report implements Serializable {
     private LocalDate date;
-    private List<Payment> totalPayments;
-    private BigDecimal totalIncome;
+    private ArrayList<Payment> payments;
 
-    //Constructores
-    public Report(LocalDate date, List<Payment> totalPayments, BigDecimal totalIncome) {
-        this.date = date;
-        this.totalPayments = totalPayments;
-        this.totalIncome = totalIncome;
-    }
-
+    // Constructor
     public Report(LocalDate date) {
         this.date = date;
+        this.payments = new ArrayList<>();
     }
 
     //Métodos
-    public Report generateDailyReport() {
-        this.totalIncome = BigDecimal.ZERO;
-
-        for (Payment payment : totalPayments) {
-            if (payment.isPaid()) {
-                this.totalIncome = this.totalIncome.add(payment.amountToBePaid());
+    public BigDecimal calculateTotalIncome() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Payment payment : payments) {
+            if (payment.getIsPaid()) {
+                total = total.add(payment.calculateAmountToBePaid());
             }
         }
-        return this;
+        return total;
     }
 
-    @Override
-    public String toString() {
-        return "Report{" +
-                "Fecha=" + date +
-                ", Pagos registrados=" + totalPayments +
-                ", Ingresos totales=" + totalIncome +
-                '}';
+    public String generateDailyReport() {
+
+        return "Fecha: " + date
+                + "\nPagos registrados: " + payments.size()
+                + "\nIngreso total: $" + calculateTotalIncome();
     }
 
-    public String generateDailySummary() {
-        generateDailyReport();
-        return toString();
-    }
-
-    //Getters and Setters
-    public List<Payment> getTotalPayments() {
-        return totalPayments;
-    }
+    //Getter
     public LocalDate getDate() {
         return date;
     }
-    public BigDecimal getTotalIncome() {
-        return totalIncome;
-    }
-    public void setTotalIncome(BigDecimal totalIncome) {
-        this.totalIncome = totalIncome;
+
+    public ArrayList<Payment> getPayments() {
+        return payments;
     }
 }
