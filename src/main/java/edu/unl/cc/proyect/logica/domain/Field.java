@@ -1,46 +1,24 @@
 package edu.unl.cc.proyect.logica.domain;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.List;
 
 public class Field {
-    private int fieldId;
-    private int organizationId;
-    private String fieldName;
+    private String name;
     private String type;
-    private float pricePerHour;
+    private BigDecimal pricePerHour;
     private String status;
-    private String openingHours;
+    private List<Schedule> schedules;
 
-    public void updatePrice(float newPrice){
-        this.pricePerHour = newPrice;
+    public void removeField(){
     }
 
-    public boolean searchAvailability(LocalDateTime scheduleToBeConfirmed){
-        return true;
+    // --- GETTERS and SETTERS ---
+    public String getName() {
+        return name;
     }
 
-
-    public int getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(int fieldId) {
-        this.fieldId = fieldId;
-    }
-
-    public int getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(int organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+    public void setName(String fieldName) {
+        this.name = fieldName;
     }
 
     public String getType() {
@@ -51,11 +29,11 @@ public class Field {
         this.type = type;
     }
 
-    public float getPricePerHour() {
+    public BigDecimal getPricePerHour() {
         return pricePerHour;
     }
 
-    public void setPricePerHour(float pricePerHour) {
+    public void setPricePerHour(BigDecimal pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
 
@@ -67,22 +45,11 @@ public class Field {
         this.status = status;
     }
 
-    public String getOpeningHours() {
-        return openingHours;
-    }
-
-    public void setOpeningHours(String openingHours) {
-        this.openingHours = openingHours;
-    }
-
-
-    public Field(int fieldId, int organizationId, String fieldName, String type, float pricePerHour, String status, String openingHours) {
-        this.fieldId = fieldId;
-        this.organizationId = organizationId;
-        this.fieldName = fieldName;
+    // CONSTRUCTOR
+    public Field(String name, String type, BigDecimal pricePerHour, String status) {
+        this.name = name;
         this.type = type;
         this.pricePerHour = pricePerHour;
         this.status = status;
-        this.openingHours = openingHours;
     }
 }

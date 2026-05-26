@@ -1,10 +1,9 @@
 package edu.unl.cc.proyect.logica.domain;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class Schedule {
-    private int slotId;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private boolean isReserved;
 
     public void lockSlot(){
@@ -15,27 +14,19 @@ public class Schedule {
 
     }
 
-    public int getSlotId() {
-        return slotId;
-    }
-
-    public void setSlotId(int slotId) {
-        this.slotId = slotId;
-    }
-
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
@@ -47,8 +38,7 @@ public class Schedule {
         isReserved = reserved;
     }
 
-    public Schedule(int slotId, LocalTime startTime, LocalTime endTime, boolean isReserved) {
-        this.slotId = slotId;
+    public Schedule(int slotId, LocalDateTime startTime, LocalDateTime endTime, boolean isReserved) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isReserved = isReserved;
