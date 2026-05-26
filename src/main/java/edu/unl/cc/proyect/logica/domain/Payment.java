@@ -4,7 +4,6 @@ import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
-import java.time.LocalTime;
 
 public class Payment {
     private int paymentId;
@@ -17,7 +16,6 @@ public class Payment {
     private Schedule schedule;
 
     //Constructores
-
 
     public Payment(int paymentId, int organizationId, LocalDateTime paymentDate, int numberOfPlayers, boolean paid, Field field, Schedule schedule) {
         this.paymentId = paymentId;
@@ -106,6 +104,4 @@ public class Payment {
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
-
-
 }
