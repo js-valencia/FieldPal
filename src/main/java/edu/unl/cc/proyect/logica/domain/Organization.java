@@ -4,51 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Organization {
-    private int idOrganization;
     private String name;
     private String address;
-    private String phoneNumber;
+    private String bussinessHour;
 
-    //Relacion de composición con Field
     private List<Field> fields;
 
-    //Constructores
-
-    //inicializa lista vacia de fields
     public Organization(){
         this.fields = new ArrayList<>();
     }
 
-    public Organization(int idOrganization, String nameOrg, String address, String phoneNumberOrg){
-        this.idOrganization = idOrganization;
-        this.name = nameOrg;
+    public Organization(String name, String address, String bussinessHour){
+        this.name = name;
         this.address = address;
-        this.phoneNumber = phoneNumberOrg;
+        this.bussinessHour = bussinessHour;
         this.fields = new ArrayList<>();
     }
 
-    //metodo para añadir canchas individualmente
-    public void addField(Field field){
-        this.fields.add(field);
-    }
-
-    //getters and setters
-
-
-    public int getIdOrganization() {
-        return idOrganization;
-    }
-
-    public void setIdOrganization(int idOrganization) {
-        this.idOrganization = idOrganization;
-    }
-
-    public String getNameOrg() {
+    public String getName() {
         return name;
     }
 
-    public void setNameOrg(String nameOrg) {
-        this.name = nameOrg;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -59,12 +37,12 @@ public class Organization {
         this.address = address;
     }
 
-    public String getPhoneNumberOrg() {
-        return phoneNumber;
+    public String getBussinessHour() {
+        return bussinessHour;
     }
 
-    public void setPhoneNumberOrg(String phoneNumberOrg) {
-        this.phoneNumber = phoneNumberOrg;
+    public void setBussinessHour(String bussinessHour) {
+        this.bussinessHour = bussinessHour;
     }
 
     public List<Field> getFields() {
@@ -73,11 +51,5 @@ public class Organization {
 
     public void setFields(List<Field> fields) {
         this.fields = fields;
-    }
-
-    public void updateProfile(String name, String address, String phoneNumber){
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
     }
 }
