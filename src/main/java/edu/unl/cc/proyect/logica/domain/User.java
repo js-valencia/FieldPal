@@ -1,60 +1,39 @@
 package edu.unl.cc.proyect.logica.domain;
 
+import java.util.Objects;
+
 public class User {
 
-    private int organizationId;
-    private int userID;
     private String username;
     private String password;
     private String phoneNumber;
     private String email;
+    private String fullName;
     private RoleType role;
 
-    // --- Constructor ---
-    public User(int organizationId, int userID, String username, String password, String phoneNumber, String email, RoleType role) {
-        this.organizationId = organizationId;
-        this.userID = userID;
-        this.username = username;
-        this.password = password;
+    // Constructor completo
+    public User(String username, String password, String phoneNumber, String email, String fullName, RoleType role) {
+        this.username = Objects.requireNonNull(username, "El username no puede ser nulo");
+        this.password = Objects.requireNonNull(password, "El password no puede ser nulo");
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.role = role;
-    }
-
-    public boolean login() {
-        System.out.println("Intentando iniciar sesión para: " + this.username);
-        return false; // Por defecto retorna false hasta que se implemente
-    }
-
-    public boolean register() {
-        System.out.println("Registrando al usuario: " + this.username);
-        return false;
+        this.fullName = fullName;
+        this.role = Objects.requireNonNull(role, "El rol no puede ser nulo");
     }
 
     public boolean hasPermission(String action) {
+        if (action == null || action.isBlank()) {
+            return false;
+        }
+
         if (this.role == RoleType.ADMIN) {
             return true;
         }
-        return false;
+
+        return "PLAY_GAME".equalsIgnoreCase(action);
     }
 
-    // --- Getters y Setters ---
-
-    public int getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(int organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
+    // --- GETTERS Y SETTERS (Encapsulamiento) ---
 
     public String getUsername() {
         return username;
@@ -86,6 +65,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public RoleType getRole() {
