@@ -1,8 +1,9 @@
 package edu.unl.cc.proyect.logica.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
 
     private String fullName;
     private String username;

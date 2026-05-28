@@ -1,8 +1,9 @@
 package edu.unl.cc.proyect.logica.domain;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Reservation {
+public class Reservation implements Serializable {
 
     private LocalDateTime date;
     private int numberOfPlayers;

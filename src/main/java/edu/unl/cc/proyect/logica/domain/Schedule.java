@@ -1,17 +1,16 @@
 package edu.unl.cc.proyect.logica.domain;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Schedule {
+public class Schedule implements Serializable {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean isReserved;
 
     public void lockSlot(){
-
     }
 
     public void releaseSlot(){
-
     }
 
     public LocalDateTime getStartTime() {

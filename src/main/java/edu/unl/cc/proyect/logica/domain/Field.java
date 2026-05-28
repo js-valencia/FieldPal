@@ -1,18 +1,33 @@
 package edu.unl.cc.proyect.logica.domain;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Field {
+public class Field implements Serializable {
     private String name;
     private String type;
     private BigDecimal pricePerHour;
-    private String status;
+
     private List<Schedule> schedules;
 
+    public Field(){
+        this.schedules = new ArrayList<>();
+    }
+
+    // CONSTRUCTOR
+    public Field(String name, String type, BigDecimal pricePerHour, String status) {
+        this.name = name;
+        this.type = type;
+        this.pricePerHour = pricePerHour;
+        this.schedules = new ArrayList<>();
+    }
+
+    //METODO
     public void removeField(){
     }
 
-    // --- GETTERS and SETTERS ---
+    // GETTERS and SETTERS
     public String getName() {
         return name;
     }
@@ -37,19 +52,11 @@ public class Field {
         this.pricePerHour = pricePerHour;
     }
 
-    public String getStatus() {
-        return status;
+    public List<Schedule> getSchedules() {
+        return schedules;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    // CONSTRUCTOR
-    public Field(String name, String type, BigDecimal pricePerHour, String status) {
-        this.name = name;
-        this.type = type;
-        this.pricePerHour = pricePerHour;
-        this.status = status;
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }
