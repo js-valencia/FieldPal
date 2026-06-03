@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Field implements Serializable {
     private String name;
-    private String type;
     private BigDecimal pricePerHour;
+    private FieldType fieldType;
 
     private List<Schedule> schedules;
 
@@ -16,11 +16,11 @@ public class Field implements Serializable {
     }
 
     // CONSTRUCTOR
-    public Field(String name, String type, BigDecimal pricePerHour, String status) {
+    public Field(String name, FieldType fieldType, BigDecimal pricePerHour) {
         this.name = name;
-        this.type = type;
         this.pricePerHour = pricePerHour;
         this.schedules = new ArrayList<>();
+        this.fieldType = fieldType;
     }
 
     //METODO
@@ -34,14 +34,6 @@ public class Field implements Serializable {
 
     public void setName(String fieldName) {
         this.name = fieldName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public BigDecimal getPricePerHour() {
@@ -58,5 +50,13 @@ public class Field implements Serializable {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public FieldType getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(FieldType fieldType) {
+        this.fieldType = fieldType;
     }
 }
