@@ -3,22 +3,20 @@ package edu.unl.cc.proyect.logica.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Serializable {
+public abstract class User implements Serializable {
 
     private String fullName;
     private String username;
     private String password;
     private String phoneNumber;
     private String email;
-    private RoleType role;
 
-    public User(String fullName, String username, String password, String phoneNumber, String email, RoleType role) {
+    public User(String fullName, String username, String password, String phoneNumber, String email) {
         this.fullName = Objects.requireNonNull(fullName, "Full name cannot be null");
         this.username = Objects.requireNonNull(username, "Username cannot be null");
         this.password = Objects.requireNonNull(password, "Password cannot be null");
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.role = Objects.requireNonNull(role, "Role cannot be null");
     }
 
     public String getFullName() {
@@ -59,10 +57,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public RoleType getRole() {
-        return role;
     }
 
     @Override
