@@ -21,10 +21,6 @@ public class User implements Serializable {
         this.role = Objects.requireNonNull(role, "Role cannot be null");
     }
 
-    public boolean hasPermission() {
-        return this.role == RoleType.ADMIN;
-    }
-
     public String getFullName() {
         return fullName;
     }
@@ -69,10 +65,6 @@ public class User implements Serializable {
         return role;
     }
 
-    public void setRole(RoleType role) {
-        this.role = role;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -80,8 +72,6 @@ public class User implements Serializable {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                '}';
+                ", email='" + email + '\'';
     }
 }
