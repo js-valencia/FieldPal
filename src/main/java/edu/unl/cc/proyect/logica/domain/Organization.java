@@ -32,7 +32,7 @@ public class Organization {
         this.fields.add(field);
     }
 
-    public void deleteField(Field field){
+    public void removeField(Field field){
         if (this.fields.size() <= 1) {
             throw new IllegalStateException("La Organizacion no se puede quedar sin canchas");
         }
