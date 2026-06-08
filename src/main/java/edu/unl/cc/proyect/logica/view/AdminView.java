@@ -3,14 +3,19 @@ package edu.unl.cc.proyect.logica.view;
 import edu.unl.cc.proyect.logica.domain.Field;
 import edu.unl.cc.proyect.logica.domain.FieldType;
 import edu.unl.cc.proyect.logica.domain.Organization;
+import edu.unl.cc.proyect.logica.domain.Payment;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminView {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        List<Payment> paymentsDay = new ArrayList<>();
 
         Organization organization = new Organization(
                 "FieldPal Center",
@@ -28,7 +33,8 @@ public class AdminView {
             System.out.println("2. Registrar Nueva Cancha en el Inventario");
             System.out.println("3. Eliminar Cancha de la Organización");
             System.out.println("4. Visualizar Perfil, Canchas y Jornada");
-            System.out.println("5. Salir del Panel");
+            System.out.println("5. Menú de pagos");
+            System.out.println("6. Salir del Panel");
             System.out.print("Seleccione una opción: ");
 
             int option = sc.nextInt();
@@ -137,6 +143,65 @@ public class AdminView {
                     break;
 
                 case 5:
+                    boolean end = false;
+                    while (!end) {
+                        System.out.println("\n=============================================");
+                        System.out.println("        MÓDULO DE PAGOS DE RESERVAS          ");
+                        System.out.println("=============================================");
+                        System.out.println("1. Resumen de pago por reserva individual");
+                        System.out.println("2. Resumen diario de ingresos totales");
+                        System.out.println("3. Volver al menú principal");
+                        System.out.print("Seleccione una opción: ");
+
+                        int election = sc.nextInt();
+                        sc.nextLine();
+
+                        switch (election) {
+                            case 1:
+                                System.out.println("\n--- RESUMEN DE PAGO POR RESERVA ---");
+                                if (paymentsDay.isEmpty()) {
+                                    System.out.println(">> No hay registros de pagos en el sistema actual.");
+                                } else {
+                                    for (int i = 0; i < paymentsDay.size(); i++) {
+                                        Payment p = paymentsDay.get(i);
+                                        System.out.println("  [" + i + "] Pago del: " + p.getPaymentDate() + " | Estado: " + p.getStatus());
+                                    }
+                                    System.out.print("Seleccione el índice del pago a consultar: ");
+                                    int indexPago = sc.nextInt();
+                                    sc.nextLine();
+
+                                    if (indexPago >= 0 && indexPago < paymentsDay.size()) {
+                                        Payment pagoSeleccionado = paymentsDay.get(indexPago);
+                                        System.out.println("\n" + pagoSeleccionado.generatePaymentSummary());
+                                    } else {
+                                        System.out.println(">> ERROR: Índice de pago fuera de rango.");
+                                    }
+                                }
+                                break;
+
+                            case 2:
+                                System.out.println("\n--- RESUMEN DIARIO DE INGRESOS ---");
+                                if (!paymentsDay.isEmpty()) {
+                                    Payment gestorReporte = paymentsDay.get(0);
+                                    System.out.println(gestorReporte.generateDailyReport(paymentsDay));
+                                } else {
+                                    System.out.println("No se registraron cobros ni reservas en la jornada actual.");
+                                }
+                                break;
+
+                            case 3:
+                                System.out.println(">> Volviendo al Panel de Administración Central...");
+                                end = true;
+                                break;
+
+                            default:
+                                System.out.println(">> Opción inválida en el submódulo de pagos.");
+                                break;
+                        }
+                    }
+                    break;
+
+                case 6:
                     System.out.println(">> Saliendo del sistema administrativo de FieldPal...");
                     salir = true;
                     break;
