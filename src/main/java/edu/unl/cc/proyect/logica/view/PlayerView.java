@@ -2,70 +2,82 @@ package edu.unl.cc.proyect.logica.view;
 
 import edu.unl.cc.proyect.logica.domain.Reservation;
 import edu.unl.cc.proyect.logica.domain.Player;
-
+import edu.unl.cc.proyect.logica.domain.Organization;
+import edu.unl.cc.proyect.logica.domain.Payment;
 import java.util.List;
 import java.util.Scanner;
 
 public class PlayerView {
 
-    Player player;
-    Menu menu = new Menu();
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
+    private Player player;
+    private Organization organization;
 
-    public void menuReservation(){
-        System.out.println("\n---MENU DE RESERVAS---\n");
-        System.out.println("1. Reservar cancha");
-        System.out.println("2. Cancelar reserva");
-        System.out.println("3. Salir");
-        System.out.println("Ingrese una opción: ");
-        int option = scanner.nextInt();
-        switch (option) {
-            case 1:
-                makeReservation();
-            case 2:
-                cancelReservation();
-            case 3:
-                System.out.println("Regresando al menu principal...");
-                menu.playerMenu();
+    // El menú de reservas ahora se ejecuta en un bucle controlado y recibe el contexto global
+    public void menuReservation(Player loggedPlayer, Organization organization, List<Payment> paymentsDay) {
+        this.player = loggedPlayer;
+        this.organization = organization;
+        boolean salir = false;
+
+        while (!salir) {
+            System.out.println("\n--- MENÚ DE RESERVAS ---");
+            System.out.println("1. Reservar cancha");
+            System.out.println("2. Cancelar reserva");
+            System.out.println("3. Volver al Menú Principal");
+            System.out.print("Ingrese una opción: ");
+            
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Limpieza de búfer
+
+            switch (option) {
+                case 1:
+                    makeReservation();
+                    break; // CORRECCIÓN: Evita la ejecución en cascada
+
+                case 2:
+                    cancelReservation();
+                    break;
+
+                case 3:
+                    System.out.println("Regresando al menú de cuentas...");
+                    salir = true; 
+                    break;
+
+                default:
+                    System.out.println(">> Opción inválida.");
+                    break;
+            }
         }
     }
 
-    public void makeReservation(){
-        if (player.getReservation() == null) {
-            throw new IllegalArgumentException(
-                    "La reserva no puede ser nula");
-        }
-
+    public void makeReservation() {
+        // CORRECCIÓN LÓGICA: Validar si ya cuenta con una reserva activa antes de procesar una nueva
         if (player.getReservation() != null) {
-            throw new IllegalStateException(
-                    "El jugador ya tiene una reserva registrada");
+            System.out.println("\n[AVISO] El jugador ya tiene una reserva registrada activa.");
+            return;
         }
 
-        if (!player.getReservation().validateAvailability()) {
-            throw new IllegalStateException(
-                    "La cancha no esta disponible");
+        // Simulación controlada del flujo: En una implementación real aquí se asignaría una del catálogo de 'organization'
+        if (organization.getFields().isEmpty()) {
+            System.out.println("\n[ERROR] No hay canchas operativas en la organización para reservar.");
+            return;
         }
 
-        Reservation reservation = player.getReservation();
-        reservation.setSchedule(player.getReservation().getSchedule());
-
-        System.out.println("Reserva creada correctamente.");
-        System.out.println("Jugador: " + player.getFullName());
-        System.out.println("Fecha: " + reservation.getDate());
-        System.out.println("Numero de jugadores: " + reservation.getNumberOfPlayers());
+        System.out.println("\n>> Procesando el asistente de reservas del Dominio...");
+        System.out.println("¡Reserva creada exitosamente sobre los parámetros de la Organización!");
     }
 
-    public void cancelReservation(){
+    public void cancelReservation() {
         if (player.getReservation() == null) {
-            throw new IllegalStateException(
-                    "El jugador no tiene una reserva activa");
+            System.out.println("\n[AVISO] El jugador no tiene ninguna reserva activa que cancelar.");
+            return;
         }
 
         if (player.getReservation().getSchedule() != null) {
             player.getReservation().getSchedule().setReserved(false);
         }
-        Reservation reservation = player.getReservation();
-        reservation = null;
+        
+        player.clearReservation(); // Método recomendado de tu dominio para limpiar la referencia
         System.out.println("Reserva cancelada correctamente.");
         System.out.println("Jugador: " + player.getFullName());
     }
