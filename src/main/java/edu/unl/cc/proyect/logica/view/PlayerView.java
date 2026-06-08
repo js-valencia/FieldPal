@@ -15,38 +15,42 @@ public class PlayerView {
     Scanner scanner = new Scanner(System.in);
 
     public void menuReservation(){
+
         System.out.println("\n---MENU DE RESERVAS---\n");
         System.out.println("1. Reservar cancha");
         System.out.println("2. Cancelar reserva");
         System.out.println("3. Salir");
-        System.out.println("Ingrese una opcion: ");
+        System.out.print("Ingrese una opcion: ");
         int option = scanner.nextInt();
         switch (option) {
             case 1:
                 makeReservation();
+                break;
             case 2:
                 cancelReservation();
+                break;
             case 3:
                 System.out.println("Regresando al menu principal...");
                 menu.playerMenu();
+                break;
+            default:
+                System.out.println("Opcion Invalida, eliga otra opcion.");
+                break;
         }
     }
 
     public void makeReservation(){
         if (player.getReservation() == null) {
-            System.out.println("No se pudo crear la reserva: la reserva no puede ser nula.");
             throw new IllegalArgumentException(
                     "La reserva no puede ser nula");
         }
 
         if (player.getReservation() != null) {
-            System.out.println("No se pudo crear la reserva: el jugador ya tiene una reserva registrada.");
             throw new IllegalStateException(
                     "El jugador ya tiene una reserva registrada");
         }
 
         if (!player.getReservation().validateAvailability()) {
-            System.out.println("No se pudo crear la reserva: la cancha no esta disponible.");
             throw new IllegalStateException(
                     "La cancha no esta disponible");
         }
@@ -62,7 +66,6 @@ public class PlayerView {
 
     public void cancelReservation(){
         if (player.getReservation() == null) {
-            System.out.println("No se pudo cancelar la reserva: el jugador no tiene una reserva activa.");
             throw new IllegalStateException(
                     "El jugador no tiene una reserva activa");
         }

@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class Admin {
+public class AdminView {
 
     Scanner sc = new Scanner(System.in);
 
