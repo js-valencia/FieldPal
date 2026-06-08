@@ -15,20 +15,27 @@ public class PlayerView {
     Scanner scanner = new Scanner(System.in);
 
     public void menuReservation(){
+
         System.out.println("\n---MENU DE RESERVAS---\n");
         System.out.println("1. Reservar cancha");
         System.out.println("2. Cancelar reserva");
         System.out.println("3. Salir");
-        System.out.println("Ingrese una opcion: ");
+        System.out.print("Ingrese una opcion: ");
         int option = scanner.nextInt();
         switch (option) {
             case 1:
                 makeReservation();
+                break;
             case 2:
                 cancelReservation();
+                break;
             case 3:
                 System.out.println("Regresando al menu principal...");
                 menu.playerMenu();
+                break;
+            default:
+                System.out.println("Opcion Invalida, eliga otra opcion.");
+                break;
         }
     }
 
