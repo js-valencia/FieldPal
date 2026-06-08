@@ -21,6 +21,9 @@ public class Reservation implements Serializable {
         this.date = LocalDateTime.now();
     }
 
+    public Reservation(LocalDateTime date, int numberOfPlayers) {
+    }
+
     public boolean validateAvailability() {
         if (this.field == null || this.schedule == null) {
             return false;
