@@ -1,6 +1,7 @@
 package edu.unl.cc.proyect.logica.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +17,21 @@ public class Field implements Serializable {
     }
 
     // CONSTRUCTOR
-    public Field(String name, FieldType fieldType, BigDecimal pricePerHour) {
+    public Field(String name, FieldType fieldType, BigDecimal pricePerHour, LocalDateTime openingHour, LocalDateTime closingHour) {
         this.name = name;
         this.pricePerHour = pricePerHour;
         this.schedules = new ArrayList<>();
         this.fieldType = fieldType;
+        generateSchedules(openingHour, closingHour);
     }
 
-    //METODO
-    public void removeField(){
+    private void generateSchedules(LocalDateTime opening, LocalDateTime closing) {
+        LocalDateTime current = opening;
+        while (current.isBefore(closing)) {
+            LocalDateTime next = current.plusHours(1);
+            this.schedules.add(new Schedule (current, next));
+            current = next;
+        }
     }
 
     // GETTERS and SETTERS
