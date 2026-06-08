@@ -27,11 +27,12 @@ public class Person {
     public boolean login(String username, String password) {
         if (this.user != null) {
 
-            boolean usuarioCorrecto = this.user.getUsername().equals(username);
-            boolean contrasenaCorrecta = this.user.getPassword().equals(password);
+            boolean correctUser = this.user.getUsername().equals(username);
+            boolean correctPassword = this.user.getPassword().equals(password);
 
-            return usuarioCorrecto && contrasenaCorrecta;
+            return correctUser && correctPassword;
         }
+
 
         return false;
     }

@@ -7,10 +7,8 @@ import edu.unl.cc.proyect.logica.domain.User;
 
 public class Menu {
 
-    // Single Scanner instance for the whole class
     private final Scanner scanner = new Scanner(System.in);
 
-    // Temporary reference to keep a single Player object in memory for domain testing
     private Player samplePlayer = null;
 
     /**
@@ -26,13 +24,12 @@ public class Menu {
         System.out.print("Seleccione una opción: ");
 
         int selectedOption = scanner.nextInt();
-        scanner.nextLine(); // Clear scanner buffer after reading an integer
+        scanner.nextLine();
 
-        // Validation loop
         while (selectedOption != 1 && selectedOption != 2 && selectedOption != 3) {
             System.out.print("Opción inválida. Ingrese (1: Jugador, 2: Admin, 3: Salir): ");
             selectedOption = scanner.nextInt();
-            scanner.nextLine(); // Clear buffer again
+            scanner.nextLine();
         }
 
         return selectedOption;
