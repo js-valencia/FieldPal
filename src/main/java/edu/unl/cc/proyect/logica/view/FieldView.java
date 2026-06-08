@@ -1,4 +1,5 @@
 package edu.unl.cc.proyect.logica.view;
+
 import edu.unl.cc.proyect.logica.domain.Field;
 import edu.unl.cc.proyect.logica.domain.FieldType;
 import edu.unl.cc.proyect.logica.domain.Schedule;
@@ -11,22 +12,20 @@ public class FieldView {
     private static Field[] fieldsCatalog;
 
     static {
-        // Configuramos la simulación para el día de hoy
         LocalDate hoy = LocalDate.now();
-        LocalTime apertura = LocalTime.of(8, 0);   // 08:00 AM
-        LocalTime cierre = LocalTime.of(12, 0);   // 12:00 PM (Genera 4 bloques horarios)
+        LocalTime apertura = LocalTime.of(8, 0);   
+        LocalTime cierre = LocalTime.of(12, 0);   
 
         fieldsCatalog = new Field[2];
+        // Sincronizado con el Enum de tu diagrama (FieldType.SOCCER)
         fieldsCatalog[0] = new Field("Cancha Central", FieldType.SOCCER, new BigDecimal("25.00"), hoy, apertura, cierre);
-        fieldsCatalog[1] = new Field("Cancha Alterna", FieldType.VOLEYBALL, new BigDecimal("15.00"), hoy, apertura, cierre);
+        fieldsCatalog[1] = new Field("Cancha Alterna", FieldType.SOCCER, new BigDecimal("15.00"), hoy, apertura, cierre);
     }
 
-    // Método de acceso para las vistas de Player y Admin
     public static Field[] getFieldsCatalog() {
         return fieldsCatalog;
     }
 
-    // Método para imprimir limpiamente la disponibilidad en consola
     public static void displayCatalogConsola() {
         System.out.println("\n=======================================================");
         System.out.println("          CATÁLOGO DE CANCHAS DISPONIBLES (HOY)        ");
