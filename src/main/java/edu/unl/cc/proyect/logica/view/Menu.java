@@ -2,21 +2,34 @@ package edu.unl.cc.proyect.logica.view;
 
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.time.LocalTime;
 import edu.unl.cc.proyect.logica.domain.Player;
 import edu.unl.cc.proyect.logica.domain.Admin;
 import edu.unl.cc.proyect.logica.domain.User;
-import edu.unl.cc.proyect.logica.domain.Field;
+import edu.unl.cc.proyect.logica.domain.Organization;
+import edu.unl.cc.proyect.logica.domain.Payment;
 
 public class Menu {
 
     private final Scanner scanner = new Scanner(System.in);
     private final ArrayList<Player> playerList = new ArrayList<>();
     private final ArrayList<Admin> adminList = new ArrayList<>();
-    private final ArrayList<Field> fieldList = new ArrayList<>();
+    
+    // Base de datos en memoria compartida para las vistas
+    private final Organization organization;
+    private final List<Payment> paymentsDay = new ArrayList<>();
 
     public Menu() {
+        // Inicializamos la organización única del complejo
+        this.organization = new Organization(
+                "FieldPal Center",
+                "Av. Universitaria",
+                LocalTime.of(8, 0),
+                LocalTime.of(22, 0)
+        );
+
+        // Usuarios de prueba (Mocks)
         User playerAccount = new User();
         Player mockPlayer = new Player("Kiara Condoy", "0999999999", "kiara@fieldpal.com", playerAccount);
         mockPlayer.register("Kiara17", "liderneocore");
@@ -26,10 +39,6 @@ public class Menu {
         Admin mockAdmin = new Admin("Javier Guarnizo", "0888888888", "javier@fieldpal.com", adminAccount);
         mockAdmin.register("admin", "admin123");
         adminList.add(mockAdmin);
-
-        fieldList.add(new Field("Cancha Central", "SOCCER_5", 25.0));
-        fieldList.add(new Field("Cancha Pucara", "SOCCER_7", 35.0));
-        fieldList.add(new Field("Cancha NeoCore", "SOCCER_11", 50.0));
     }
 
     public int welcomeMenu() {
@@ -75,7 +84,7 @@ public class Menu {
 
             playerList.add(newPlayer);
 
-            System.out.println("\n¡Jugador registrado con éxito en el sistema!");
+            System.out.println("\n¡Jugador registrado con éxito!");
             System.out.println("Presione ENTER para continuar...");
             scanner.nextLine();
 
@@ -95,52 +104,15 @@ public class Menu {
             if (loggedPlayer != null) {
                 System.out.println("\n¡Login Exitoso! Bienvenido, " + loggedPlayer.getFullName());
 
-                System.out.println("\n--- SELECCIÓN DE CANCHA ---");
-                for (int i = 0; i < fieldList.size(); i++) {
-                    Field f = fieldList.get(i);
-                    String fieldName = (i == 0) ? "Cancha Central" : (i == 1) ? "Cancha Pucara" : "Cancha NeoCore";
-                    String fieldType = (i == 0) ? "SOCCER_5" : (i == 1) ? "SOCCER_7" : "SOCCER_11";
-                    String fieldPrice = (i == 0) ? "25.0" : (i == 1) ? "35.0" : "50.0";
-
-                    System.out.println((i + 1) + ". " + fieldName + " (" + fieldType + ") - $" + fieldPrice);
-                }
-                System.out.print("Seleccione una cancha: ");
-                int fieldChoice = scanner.nextInt() - 1;
-                scanner.nextLine();
-
-                if (fieldChoice >= 0 && fieldChoice < fieldList.size()) {
-                    Field selectedField = fieldList.get(fieldChoice);
-
-                    System.out.print("Ingrese la fecha y hora (Formato: DD/MM/AAAA HH:MM): ");
-                    String dateTimeInput = scanner.nextLine();
-
-                    try {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-                        LocalDateTime reservationDate = LocalDateTime.parse(dateTimeInput, formatter);
-
-                        System.out.print("Ingrese la cantidad de horas a reservar: ");
-                        int durationHours = scanner.nextInt();
-                        scanner.nextLine();
-
-                        System.out.println("\nProcesando reserva en el Dominio...");
-                        loggedPlayer.makeReservation(reservationDate, durationHours, selectedField);
-                        System.out.println("¡Reserva creada y asociada al jugador con éxito!");
-
-                    } catch (java.time.format.DateTimeParseException e) {
-                        System.out.println("\n[ERROR] Formato de fecha inválido.");
-                    } catch (IllegalStateException exception) {
-                        System.out.println("\n[AVISO DEL DOMINIO] " + exception.getMessage());
-                    }
-                } else {
-                    System.out.println("\n[ERROR] Selección de cancha inválida.");
-                }
+                // CAMBIO CLAVE: En lugar de procesar la reserva aquí, llamamos a PlayerView
+                PlayerView playerView = new PlayerView();
+                playerView.menuReservation(loggedPlayer, this.organization, this.paymentsDay);
 
             } else {
                 System.out.println("\n[ERROR] Usuario o contraseña incorrectos.");
+                System.out.println("Presione ENTER para continuar...");
+                scanner.nextLine();
             }
-
-            System.out.println("Presione ENTER para continuar...");
-            scanner.nextLine();
         }
     }
 
@@ -168,13 +140,16 @@ public class Menu {
 
             if (loggedAdmin != null) {
                 System.out.println("\n¡Login de Administrador Exitoso! Bienvenido, " + loggedAdmin.getFullName());
-                System.out.println("Acceso concedido al panel de control de FieldPal (Simulado).");
+                
+                // CAMBIO CLAVE: Transferimos el flujo directamente al panel de control de AdminView
+                AdminView adminView = new AdminView();
+                adminView.adminMenu(this.organization, this.paymentsDay);
+
             } else {
                 System.out.println("\n[ERROR] Credenciales de administrador inválidas.");
+                System.out.println("Presione ENTER para continuar...");
+                scanner.nextLine();
             }
-
-            System.out.println("Presione ENTER para continuar...");
-            scanner.nextLine();
         }
     }
 }
