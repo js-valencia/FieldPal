@@ -27,6 +27,9 @@ public class Field implements Serializable {
         generateSchedulesForDate(targetDate, openingHour, closingHour);
     }
 
+    public Field(String canchaCentral, String soccer5, double v) {
+    }
+
 
     private void generateSchedulesForDate(LocalDate date, LocalTime opening, LocalTime closing) {
         LocalDateTime current = LocalDateTime.of(date, opening);

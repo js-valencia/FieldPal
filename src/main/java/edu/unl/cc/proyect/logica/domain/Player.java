@@ -10,7 +10,7 @@ public class Player extends Person{
         super(fullName, phoneNumber, email, user);
     }
 
-    public void makeReservation(LocalDateTime date, int numberOfPlayers) {
+    public void makeReservation(LocalDateTime date, int numberOfPlayers, Field selectedField) {
         Reservation newReserve = new Reservation(date, numberOfPlayers);
 
         if (newReserve.validateAvailability()) {
