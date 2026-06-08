@@ -34,19 +34,16 @@ public class PlayerView {
 
     public void makeReservation(){
         if (player.getReservation() == null) {
-            System.out.println("No se pudo crear la reserva: la reserva no puede ser nula.");
             throw new IllegalArgumentException(
                     "La reserva no puede ser nula");
         }
 
         if (player.getReservation() != null) {
-            System.out.println("No se pudo crear la reserva: el jugador ya tiene una reserva registrada.");
             throw new IllegalStateException(
                     "El jugador ya tiene una reserva registrada");
         }
 
         if (!player.getReservation().validateAvailability()) {
-            System.out.println("No se pudo crear la reserva: la cancha no esta disponible.");
             throw new IllegalStateException(
                     "La cancha no esta disponible");
         }
@@ -62,7 +59,6 @@ public class PlayerView {
 
     public void cancelReservation(){
         if (player.getReservation() == null) {
-            System.out.println("No se pudo cancelar la reserva: el jugador no tiene una reserva activa.");
             throw new IllegalStateException(
                     "El jugador no tiene una reserva activa");
         }
