@@ -16,12 +16,10 @@ public class Menu {
     private final ArrayList<Player> playerList = new ArrayList<>();
     private final ArrayList<Admin> adminList = new ArrayList<>();
     
-    // Base de datos en memoria compartida para las vistas
     private final Organization organization;
     private final List<Payment> paymentsDay = new ArrayList<>();
 
     public Menu() {
-        // Inicializamos la organización única del complejo
         this.organization = new Organization(
                 "FieldPal Center",
                 "Av. Universitaria",
@@ -29,7 +27,6 @@ public class Menu {
                 LocalTime.of(22, 0)
         );
 
-        // Usuarios de prueba (Mocks)
         User playerAccount = new User();
         Player mockPlayer = new Player("Kiara Condoy", "0999999999", "kiara@fieldpal.com", playerAccount);
         mockPlayer.register("Kiara17", "liderneocore");
@@ -104,7 +101,7 @@ public class Menu {
             if (loggedPlayer != null) {
                 System.out.println("\n¡Login Exitoso! Bienvenido, " + loggedPlayer.getFullName());
 
-                // CAMBIO CLAVE: En lugar de procesar la reserva aquí, llamamos a PlayerView
+                // Pasamos los 3 parámetros requeridos por PlayerView
                 PlayerView playerView = new PlayerView();
                 playerView.menuReservation(loggedPlayer, this.organization, this.paymentsDay);
 
@@ -141,7 +138,7 @@ public class Menu {
             if (loggedAdmin != null) {
                 System.out.println("\n¡Login de Administrador Exitoso! Bienvenido, " + loggedAdmin.getFullName());
                 
-                // CAMBIO CLAVE: Transferimos el flujo directamente al panel de control de AdminView
+                // Pasamos los 2 parámetros requeridos por AdminView
                 AdminView adminView = new AdminView();
                 adminView.adminMenu(this.organization, this.paymentsDay);
 
