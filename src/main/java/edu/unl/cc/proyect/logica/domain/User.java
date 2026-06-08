@@ -13,6 +13,10 @@ public abstract class User implements Serializable {
         this.password = Objects.requireNonNull(password, "Password cannot be null");
     }
 
+    public User() {
+
+    }
+
     public String getUsername() {
         return username;
     }
