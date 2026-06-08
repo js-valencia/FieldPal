@@ -27,6 +27,18 @@ public class Field implements Serializable {
     public void removeField(){
     }
 
+
+    // MÉTODO ESTÁTICO PARA EL CATÁLOGO DE PRUEBA (Requerimiento APE05)
+    public static List<Field> getStaticFields() {
+        List<Field> list = new ArrayList<>();
+        // Agregamos las 3 canchas acordadas por el equipo usando el constructor parametrizado
+        list.add(new Field("Cancha Central - Fútbol", FieldType.SOCCER, new BigDecimal("25.00")));
+        list.add(new Field("Cancha Norte - Tenis", FieldType.TENNIS, new BigDecimal("15.00")));
+        list.add(new Field("Cancha Sur - Pádel", FieldType.PADEL, new BigDecimal("20.00")));
+        return list;
+    }
+
+
     // GETTERS and SETTERS
     public String getName() {
         return name;
