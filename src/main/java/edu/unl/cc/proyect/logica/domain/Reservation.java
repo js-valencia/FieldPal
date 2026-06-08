@@ -7,14 +7,14 @@ public class Reservation implements Serializable {
 
     private LocalDateTime date;
     private int numberOfPlayers;
-    private User user;
+    private Player player;
     private Field field;
     private Schedule schedule;
 
     public Reservation() {}
 
-    public Reservation(User user, Field field, Schedule schedule, int numberOfPlayers) {
-        this.user = user;
+    public Reservation(Player player, Field field, Schedule schedule, int numberOfPlayers) {
+        this.player = player;
         this.field = field;
         this.schedule = schedule;
         this.numberOfPlayers = numberOfPlayers;
@@ -26,15 +26,6 @@ public class Reservation implements Serializable {
             return false;
         }
         return !this.schedule.isReserved();
-    }
-
-    public void cancelReservation() {
-        if (this.schedule != null) {
-            this.schedule.setReserved(false);
-        }
-
-        String clientName = (this.user != null) ? this.user.getFullName() : "Cliente Desconocido";
-        System.out.println("[SISTEMA] Reserva cancelada con éxito para el usuario: " + clientName);
     }
 
     // --- GETTERS y SETTERS ---
@@ -54,12 +45,12 @@ public class Reservation implements Serializable {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public User getUser() {
-        return user;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Field getField() {
