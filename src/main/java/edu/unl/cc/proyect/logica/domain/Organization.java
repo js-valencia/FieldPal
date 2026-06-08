@@ -8,7 +8,7 @@ import java.util.List;
 public class Organization {
     private String name;
     private String address;
-    private LocalTime oppeningHour;
+    private LocalTime openingHour;
     private LocalTime closingHour;
 
     //Relacion de composicion:
@@ -19,10 +19,10 @@ public class Organization {
         this.fields = new ArrayList<>();
     }
 
-    public Organization(String name, String address, LocalTime oppeningHour, LocalTime closingHour){
+    public Organization(String name, String address, LocalTime openingHour, LocalTime closingHour){
         this.name = name;
         this.address = address;
-        this.oppeningHour = oppeningHour;
+        this.openingHour = openingHour;
         this.closingHour = closingHour;
         this.fields = new ArrayList<>();
     }
@@ -40,7 +40,7 @@ public class Organization {
     }
 
     public Duration calculateBussinessHours(){
-        return Duration.between(oppeningHour, closingHour);
+        return Duration.between(openingHour, closingHour);
     }
 
     // getters and setters
@@ -61,12 +61,12 @@ public class Organization {
         this.address = address;
     }
 
-    public LocalTime getOppeningHour() {
-        return oppeningHour;
+    public LocalTime getOpeningHour() {
+        return openingHour;
     }
 
-    public void setOppeningHour(LocalTime oppeningHour) {
-        this.oppeningHour = oppeningHour;
+    public void setOpeningHour(LocalTime oppeningHour) {
+        this.openingHour = oppeningHour;
     }
 
     public LocalTime getClosingHour() {
