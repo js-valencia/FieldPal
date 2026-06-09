@@ -101,7 +101,6 @@ public class Menu {
             if (loggedPlayer != null) {
                 System.out.println("\n¡Login Exitoso! Bienvenido, " + loggedPlayer.getFullName());
 
-                // Pasamos los 3 parámetros requeridos por PlayerView
                 PlayerView playerView = new PlayerView();
                 playerView.menuReservation(loggedPlayer, this.organization, this.paymentsDay);
 
@@ -138,7 +137,6 @@ public class Menu {
             if (loggedAdmin != null) {
                 System.out.println("\n¡Login de Administrador Exitoso! Bienvenido, " + loggedAdmin.getFullName());
                 
-                // Pasamos los 2 parámetros requeridos por AdminView
                 AdminView adminView = new AdminView();
                 adminView.adminMenu(this.organization, this.paymentsDay);
 
