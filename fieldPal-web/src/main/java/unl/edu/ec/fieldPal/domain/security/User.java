@@ -28,11 +28,11 @@ public class User implements Serializable {
         roles = new HashSet<>();
     }
 
-    public User(Long id, @NotNull @NotEmpty String name, String password) {
+    public User(Long id, @NotNull @NotEmpty String name, @NotNull @NotEmpty String password) {
         this();
-        this.id = Objects.requireNonNull(id, "id es requerido");
-        this.name = Objects.requireNonNull(name, "name es requerido");
-        this.password = Objects.requireNonNull(password, "passwords es requerido");;
+        this.id = id;
+        this.name = name;
+        this.password = password;
     }
 
     public User(Long id, @NotNull @NotEmpty String name, String password,  @NotNull Organization organization) {
